@@ -1,58 +1,36 @@
 import random
+import secrets
 
 
 def Pass_word_picker(user_choice):
+    
     count = 1
     Gen_Password = ""
     pass_list = [
-        "@",
-        "!",
-        "#",
-        "$",
-        "%",
-        "^",
-        "&",
-        "*",
-        "()",
-        "+",
-        "a",
-        "b",
-        "c",
-        "d",
-        "e",
-        "f",
-        "g",
-        "h",
-        "i",
-        "j",
-        "k",
-        "l",
-        "m",
-        "n",
-        "o",
-        "p",
-        "q",
-        "w",
-        "y",
-        "z",
-        "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "6",
-        "7",
-        "8",
-        "9",
+        "abcdefghijklmnopqrstuvwxyz"
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        "0123456789"
+        "!@#$%^&*()-_=+[];:,.?/|"
     ]
 
     while count <= user_choice:
-        Gen_Password += random.choice(pass_list)
-        count += 1
+        for i in pass_list:
+            Gen_Password += secrets.choice(i)
+            count += 1
     print(Gen_Password)
     return Gen_Password
 
 
+def PassWord_Saver(genpassword):
+    with open("Password.txt", "w", encoding="utf-8") as file:
+        file.write(genpassword)
+
+
 user = int(input("lenght of password: "))
 
-Pass_word_picker(user)
+Genarated_Password = Pass_word_picker(user)
+
+choice = input("For Saving Your Password Enter y : ")
+
+if choice == "y" or choice == "Y":
+    PassWord_Saver(Genarated_Password)
