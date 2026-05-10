@@ -3,14 +3,13 @@ import secrets
 
 
 def Pass_word_picker(user_choice):
-    
     count = 1
     Gen_Password = ""
     pass_list = [
         "abcdefghijklmnopqrstuvwxyz"
         "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         "0123456789"
-        "!@#$%^&*()-_=+[];:,.?/|"
+        "!@#$%^&*()-_=+[];:,.?/|﷼,،<ژءِ"
     ]
 
     while count <= user_choice:
