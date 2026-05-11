@@ -43,11 +43,9 @@ if user < 8 or user > 20:
     while user < 8 or user > 20:
         user = int(input("Please Enter Number Between 8 To 20 :  "))
 Genarated_Password = Pass_Word_Picker(user)
+pyperclip.copy(Genarated_Password)
 
-choice = input("For Saving Your Password Enter y (for copy in your clipbord press c): ")
+choice = input("your password copy to clipboard \n For Saving Your Password Enter y: ")
 
 if choice == "y" or choice == "Y":
     PassWord_Saver(Genarated_Password)
-elif choice == "c" or choice == "C":
-    pyperclip.copy(Genarated_Password)
-    print("Coppied to Clipboard!")
