@@ -25,8 +25,10 @@ def PassWord_Saver(genpassword):
         file.write(genpassword)
 
 
-user = int(input("lenght of password: "))
-
+user = int(input("lenght of password (From 8 to 20): "))
+if user < 8 or user > 20:
+    while user < 8 or user > 20:
+        user = int(input("Please Enter Number Between 8 To 20 :  "))
 Genarated_Password = Pass_word_picker(user)
 
 choice = input("For Saving Your Password Enter y : ")
