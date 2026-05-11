@@ -46,8 +46,10 @@ Generated_Password = Pass_Word_Picker(user)
 pyperclip.copy(Generated_Password)
 
 choice = input(
-    "\n \n ✅ your password copy to clipboard \n \n For Saving Your Password Enter y: "
+    "\n \n ✅ your password copy to clipboard \n \n ُSave your Password? (y/n): "
 )
 
 if choice == "y" or choice == "Y":
     PassWord_Saver(Generated_Password)
+else:
+    print("\n ❌ Password not saved.")
