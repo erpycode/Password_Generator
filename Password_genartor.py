@@ -9,7 +9,7 @@ def Pass_Word_Picker(user_choice):
         user_choice (int): user choose its lenth of pass
 
     Returns:
-        _type_: generated password
+        string: generated password
     """
     count = 1
     Gen_Password = ""
@@ -24,7 +24,7 @@ def Pass_Word_Picker(user_choice):
         for i in pass_list:
             Gen_Password += secrets.choice(i)
             count += 1
-    print(Gen_Password)
+    print(f"\n \n {Gen_Password}")
     return Gen_Password
 
 
@@ -32,7 +32,7 @@ def PassWord_Saver(genpassword):
     """this func save gen password to txt file
 
     Args:
-        genpassword (string): password that Genrated
+        genpassword (string): password that Generated
     """
     with open("Password.txt", "w", encoding="utf-8") as file:
         file.write(genpassword)
@@ -42,10 +42,12 @@ user = int(input("lenght of password (From 8 to 20): "))
 if user < 8 or user > 20:
     while user < 8 or user > 20:
         user = int(input("Please Enter Number Between 8 To 20 :  "))
-Genarated_Password = Pass_Word_Picker(user)
-pyperclip.copy(Genarated_Password)
+Generated_Password = Pass_Word_Picker(user)
+pyperclip.copy(Generated_Password)
 
-choice = input("your password copy to clipboard \n For Saving Your Password Enter y: ")
+choice = input(
+    "\n \n your password copy to clipboard \n \n For Saving Your Password Enter y: "
+)
 
 if choice == "y" or choice == "Y":
-    PassWord_Saver(Genarated_Password)
+    PassWord_Saver(Generated_Password)
