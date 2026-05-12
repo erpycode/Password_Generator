@@ -2,7 +2,7 @@ import secrets
 import pyperclip
 
 
-def Pass_Word_Picker(user_choice):
+def pass_word_picker(user_choice):
     """this func generate password
 
     Args:
@@ -12,7 +12,7 @@ def Pass_Word_Picker(user_choice):
         string: generated password
     """
     count = 1
-    Gen_Password = ""
+    gen_password = ""
     pass_list = [
         "abcdefghijklmnopqrstuvwxyz"
         "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -22,13 +22,13 @@ def Pass_Word_Picker(user_choice):
 
     while count <= user_choice:
         for i in pass_list:
-            Gen_Password += secrets.choice(i)
+            gen_password += secrets.choice(i)
             count += 1
-    print(f"\n \n {Gen_Password}")
-    return Gen_Password
+    print(f"\n \n {gen_password}")
+    return gen_password
 
 
-def PassWord_Saver(genpassword):
+def pass_word_saver(genpassword):
     """this func save gen password to txt file
 
     Args:
@@ -42,7 +42,7 @@ user = int(input("lenght of password (From 8 to 20): "))
 if user < 8 or user > 20:
     while user < 8 or user > 20:
         user = int(input("Please Enter Number Between 8 To 20 :  "))
-Generated_Password = Pass_Word_Picker(user)
+Generated_Password = pass_word_picker(user)
 pyperclip.copy(Generated_Password)
 
 choice = input(
@@ -50,6 +50,6 @@ choice = input(
 )
 
 if choice == "y" or choice == "Y":
-    PassWord_Saver(Generated_Password)
+    pass_word_saver(Generated_Password)
 else:
     print("\n ❌ Password not saved.")
