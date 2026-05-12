@@ -34,8 +34,9 @@ def pass_word_saver(genpassword):
     Args:
         genpassword (string): password that Generated
     """
-    with open("Password.txt", "w", encoding="utf-8") as file:
-        file.write(genpassword)
+    pass_name = input("Enter a name for this password: ")
+    with open("Password.txt", "a", encoding="utf-8") as file:
+        file.write(f"{pass_name}: {genpassword} \n")
 
 
 user = int(input("lenght of password (From 8 to 20): "))
