@@ -1,5 +1,6 @@
 import secrets
 import pyperclip
+import string
 
 
 def pass_word_picker(user_choice):
@@ -13,12 +14,7 @@ def pass_word_picker(user_choice):
     """
     count = 1
     gen_password = ""
-    pass_list = [
-        "abcdefghijklmnopqrstuvwxyz"
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        "0123456789"
-        "!@#$%^&*()-_=+[];:,.?/|﷼,،<ژءِ"
-    ]
+    pass_list = [string.ascii_letters + string.digits + string.punctuation]
 
     while count <= user_choice:
         for i in pass_list:
