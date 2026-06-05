@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Generator | پسورد جنریتور</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            direction: rtl;
+        }
+
+        .container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 100%;
+            padding: 40px;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #999;
+            font-size: 14px;
+        }
+
+        .logo {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .length-input-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        input[type="range"] {
+            flex: 1;
+            height: 6px;
+            border-radius: 3px;
+            background: #e0e0e0;
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(102, 126, 234, 0.4);
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 5px rgba(102, 126, 234, 0.4);
+        }
+
+        .length-display {
+            background: #f0f0f0;
+            padding: 8px 12px;
+            border-radius: 8px;
+            min-width: 50px;
+            text-align: center;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .password-display {
+            display: flex;
+            align-items: center;
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 12px 15px;
+            word-break: break-all;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #333;
+            min-height: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .password-display:hover {
+            border-color: #667eea;
+            background: #f0f0ff;
+        }
+
+        .copy-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .copy-btn:active {
+            transform: translateY(0);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+            border: 2px solid #e0e0e0;
+        }
+
+        .btn-secondary:hover {
+            background: #e8e8e8;
+            border-color: #667eea;
+        }
+
+        .save-section {
+            display: none;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        .save-section.active {
+            display: block;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 10px;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+            background: #f0f0ff;
+        }
+
+        .notification {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .notification.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+
+        .notification.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .info-box {
+            background: #f0f0ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 13px;
+            color: #555;
+            margin-top: 20px;
+        }
+
+        .info-box strong {
+            color: #333;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .length-input-wrapper {
+                flex-direction: column;
+            }
+
+            .length-display {
+                width: 100%;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">🔐</div>
+            <h1>Password Generator</h1>
+            <p>پسورد جنریتور امن</p>
+        </div>
+
+        <div class="notification" id="notification"></div>
+
+        <div class="form-group">
+            <label for="lengthSlider">طول پسورد</label>
+            <div class="length-input-wrapper">
+                <input type="range" id="lengthSlider" min="8" max="20" value="12">
+                <div class="length-display" id="lengthDisplay">12</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>پسورد تولید شده:</label>
+            <div class="password-display" id="passwordDisplay">
+                <button class="copy-btn" id="copyBtn">📋 کپی</button>
+                <div id="passwordText">Click Generate</div>
+            </div>
+        </div>
+
+        <div class="button-group">
+            <button class="btn btn-primary" id="generateBtn">Generate</button>
+            <button class="btn btn-secondary" id="toggleSaveBtn">💾 Save</button>
+        </div>
+
+        <div class="save-section" id="saveSection">
+            <input type="text" id="passwordName" placeholder="نام این پسورد را وارد کنید...">
+            <button class="btn btn-primary" id="saveBtn">ذخیره پسورد</button>
+        </div>
+
+        <div class="info-box">
+            <strong>💡 نکات امنیتی:</strong><br>
+            ✓ پسورد‌ها فقط روی دستگاه شما ذخیره می‌شوند<br>
+            ✓ هرگز اطلاعات شما به سرور ارسال نمی‌شود<br>
+            ✓ بدون اینترنت هم می‌تونید استفاده کنید
+        </div>
+    </div>
+
+    <script>
+        const lengthSlider = document.getElementById('lengthSlider');
+        const lengthDisplay = document.getElementById('lengthDisplay');
+        const passwordText = document.getElementById('passwordText');
+        const copyBtn = document.getElementById('copyBtn');
+        const generateBtn = document.getElementById('generateBtn');
+        const toggleSaveBtn = document.getElementById('toggleSaveBtn');
+        const saveBtn = document.getElementById('saveBtn');
+        const passwordName = document.getElementById('passwordName');
+        const saveSection = document.getElementById('saveSection');
+        const notification = document.getElementById('notification');
+
+        // Update length display
+        lengthSlider.addEventListener('input', (e) => {
+            lengthDisplay.textContent = e.target.value;
+        });
+
+        // Generate password
+        async function generatePassword() {
+            try {
+                const length = lengthSlider.value;
+                const response = await fetch('/generate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ length: length })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    passwordText.textContent = data.password;
+                    showNotification('✅ پسورد تولید شد!', 'success');
+                } else {
+                    showNotification('❌ خطا: ' + data.error, 'error');
+                }
+            } catch (error) {
+                showNotification('❌ خطا در ارتباط با سرور', 'error');
+            }
+        }
+
+        // Copy to clipboard
+        copyBtn.addEventListener('click', () => {
+            const password = passwordText.textContent;
+            if (password && password !== 'Click Generate') {
+                navigator.clipboard.writeText(password).then(() => {
+                    showNotification('✅ پسورد کپی شد!', 'success');
+                    copyBtn.textContent = '✔️ کپی شد';
+                    setTimeout(() => {
+                        copyBtn.textContent = '📋 کپی';
+                    }, 2000);
+                });
+            }
+        });
+
+        // Generate button click
+        generateBtn.addEventListener('click', generatePassword);
+
+        // Toggle save section
+        toggleSaveBtn.addEventListener('click', () => {
+            saveSection.classList.toggle('active');
+        });
+
+        // Save password
+        saveBtn.addEventListener('click', async () => {
+            const password = passwordText.textContent;
+            const name = passwordName.value.trim() || 'Password';
+
+            if (password && password !== 'Click Generate') {
+                try {
+                    const response = await fetch('/save', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            name: name,
+                            password: password
+                        })
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        showNotification('✅ پسورد ذخیره شد!', 'success');
+                        passwordName.value = '';
+                        saveSection.classList.remove('active');
+                    } else {
+                        showNotification('❌ خطا: ' + data.error, 'error');
+                    }
+                } catch (error) {
+                    showNotification('❌ خطا در ذخیره', 'error');
+                }
+            } else {
+                showNotification('⚠️ ابتدا پسورد تولید کنید', 'error');
+            }
+        });
+
+        // Notification helper
+        function showNotification(message, type) {
+            notification.textContent = message;
+            notification.className = 'notification ' + type;
+            setTimeout(() => {
+                notification.className = 'notification';
+            }, 3000);
+        }
+
+        // Generate password on page load
+        generatePassword();
+    </script>
+</body>
+</html>
